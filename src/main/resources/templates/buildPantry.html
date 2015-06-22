@@ -10,8 +10,18 @@
 
     <div id="middle">
 
+        <form method="post" action="/displayPantry">
+            <ul>
+                <li>What's in Your Pantry?</li>
+                <li th:each="pantryItem : ${pantryItems}">
+                    <input type="checkbox" name="pantryItems" th:value="${pantryItem}"  />
+                    <label th:for="${pantryItem}"
+                           th:text="${pantryItem.getIngredientName()}"></label>
 
-        <p>Build Pantry!</p>
+                </li>
+                <li> <input type="submit" class="btn btn-default" value="Submit" /> </li>
+            </ul>
+        </form>
 
     </div>
 

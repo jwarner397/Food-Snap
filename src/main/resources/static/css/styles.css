@@ -36,3 +36,15 @@
 table{
     margin: 0 auto;
 }
+
+ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display:inline-block;
+}
+
+li{
+    text-align: center;
+}
+

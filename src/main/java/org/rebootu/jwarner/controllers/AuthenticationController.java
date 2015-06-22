@@ -20,7 +20,7 @@ public class AuthenticationController extends AbstractController {
 
     @RequestMapping(value = "/")
     public String index(){
-        return "redirect:pantry";
+        return "index";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -68,7 +68,7 @@ public class AuthenticationController extends AbstractController {
         // User is valid; set in session
         request.getSession().setAttribute(userSessionKey, user.getUid());
 
-        return "redirect:pantry";
+        return "index";
     }
 
 

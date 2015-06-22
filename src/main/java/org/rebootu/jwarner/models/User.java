@@ -4,6 +4,8 @@ import org.rebootu.jwarner.models.util.PasswordHash;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Joseph on 6/1/2015.
@@ -15,15 +17,16 @@ public class User extends AbstractEntity {
     private String hash;
 
     /**
-     * A collection of all the recipes this user has received.
+     * ingredients in user's pantry
      */
-    // private ArrayList recipeList;
+    private ArrayList<Ingredient> pantryList;
 
 
     public User(String userName, String password) {
         this.hash = PasswordHash.getHash(password);
         this.userName = userName;
-        // this.recipeList = new ArrayList();
+        this.pantryList = new ArrayList<>();
+
     }
 
     // empty constructor so Spring can do its magic
@@ -49,24 +52,13 @@ public class User extends AbstractEntity {
         this.hash = hash;
     }
 
-    /* @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "owner_id")
-    public ArrayList getRecipeList() {
-        return recipeList;
+    @Column(name = "list")
+    public ArrayList<Ingredient> getPantryList() {
+        return pantryList;
     }
 
-    private void setRecipeList(ArrayList recipeList) {
-        this.recipeList = recipeList;
+    public void setPantryList(ArrayList<Ingredient> pantryList) {
+        this.pantryList = pantryList;
     }
 
-    void addRecipe (Recipe recipe) throws IllegalArgumentException {
-
-        // Ensure a holding for the symbol doesn't already exist
-        if (recipeList.containsKey(recipe.getSymbol())) {
-            throw new IllegalArgumentException("A holding for symbol " + recipe.getSymbol()
-                    + " already exits for user " + getUid());
-        }
-
-        recipeList.put(recipe.getSymbol(), recipe);
-    } */
 }
