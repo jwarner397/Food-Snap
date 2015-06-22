@@ -6,10 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Joseph on 6/19/2015.
@@ -21,7 +20,7 @@ public class RecipeController extends AbstractController {
     public String getRecipes(HttpServletRequest request, Model model){
         // bring user into scope
         User user = getUserFromSession(request);
-        ArrayList<Ingredient> ingredients;
+        List<Ingredient> ingredients;
 
         // get user's ingredient list
         try{
@@ -34,7 +33,7 @@ public class RecipeController extends AbstractController {
         String csvList = null;
 
         for(int i = 0; i < ingredients.size(); i++) {
-            csvList = csvList + ingredients.get(i).getIngredientName() + ", ";
+            csvList = csvList + ingredients.get(i).getName() + ", ";
 
         }
 

@@ -12,9 +12,9 @@
         <ul>
             <li>Here is Your Pantry List</li>
             <!-- <span th:text="${pantryList}"></span> -->
-            <li th:each="pantryItem : ${pantryList}">
+            <li th:each="pantryItem : ${ingredientList}">
 
-                <span th:text="${pantryItem.getIngredientName}"></span>
+                <span th:text="${pantryItem.getName()}"></span>
             </li>
         </ul>
 

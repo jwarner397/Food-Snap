@@ -16,7 +16,7 @@
                 <li th:each="pantryItem : ${pantryItems}">
                     <input type="checkbox" name="pantryItems" th:value="${pantryItem}"  />
                     <label th:for="${pantryItem}"
-                           th:text="${pantryItem.getIngredientName()}"></label>
+                           th:text="${pantryItem}"></label>
 
                 </li>
                 <li> <input type="submit" class="btn btn-default" value="Submit" /> </li>

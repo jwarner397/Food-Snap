@@ -1,46 +1,37 @@
 package org.rebootu.jwarner.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Joseph on 6/19/2015.
  */
 @Entity
 @Table(name = "ingredients")
-public class Ingredient extends AbstractEntity {
-    private String ingredientName;
-    private int idNumber;
+public class Ingredient extends AbstractEntity implements Serializable {
+    private String name;
+    // private int ownerId;
 
-    public Ingredient(String ingredientName, int idNumber){
-        this.ingredientName = ingredientName;
-        this.idNumber = idNumber;
+    public Ingredient(String name, int ownerId){
+        this.name = name;
+        // this.ownerId = ownerId;
     }
 
     public Ingredient(){}
 
     @Column(name = "name")
-    public String getIngredientName(){
-        return this.ingredientName;
+    public String getName(){
+        return this.name;
     }
 
-    public void setIngredientName(String ingredientName) {
-        this.ingredientName = ingredientName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Column(name = "idNumber")
-    public int getIdNumber() {
-        return this.idNumber;
-    }
-
-    public void setIdNumber( int idNumber) {
-        this.idNumber = idNumber;
-    }
-
-
-
+    /*@Column(name = "ownerId", nullable = false)
+    public int getOwnerId() {
+        return this.ownerId;
+    }*/
 
 
 

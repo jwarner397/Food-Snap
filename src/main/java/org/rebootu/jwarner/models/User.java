@@ -19,7 +19,7 @@ public class User extends AbstractEntity {
     /**
      * ingredients in user's pantry
      */
-    private ArrayList<Ingredient> pantryList;
+    private List<Ingredient> pantryList;
 
 
     public User(String userName, String password) {
@@ -52,12 +52,14 @@ public class User extends AbstractEntity {
         this.hash = hash;
     }
 
-    @Column(name = "list")
-    public ArrayList<Ingredient> getPantryList() {
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "user_ingredient", joinColumns=@JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="ingredient_id"))
+    // @Column(name = "list")
+    public List<Ingredient> getPantryList() {
         return pantryList;
     }
 
-    public void setPantryList(ArrayList<Ingredient> pantryList) {
+    public void setPantryList(List<Ingredient> pantryList) {
         this.pantryList = pantryList;
     }
 

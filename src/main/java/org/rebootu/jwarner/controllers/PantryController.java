@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -27,7 +25,6 @@ public class PantryController extends AbstractController {
     public String pantry(HttpServletRequest request, Model model){
 
 
-
         model.addAttribute("title", "Pantry");
         model.addAttribute("pantryNavClass", "active");
 
@@ -38,8 +35,9 @@ public class PantryController extends AbstractController {
     @RequestMapping(value = "/displayPantry", method = RequestMethod.POST)
     public String displayPantry(String pantryItems, HttpServletRequest request, Model model) {
 
+        System.out.println(pantryItems);
         ArrayList<String> ingredientsChosen;
-        ArrayList<Ingredient> ingredientList = null;
+        ArrayList<Ingredient> ingredientList = new ArrayList<>();
 
         try {
             ingredientsChosen = new ArrayList<String>(Arrays.asList(pantryItems.split("\\s*,\\s*")));
@@ -48,11 +46,17 @@ public class PantryController extends AbstractController {
             return displayError("You have not chosen any Pantry items yet!", model);
         }
 
+        // test loop
+        for (int t = 0; t < ingredientsChosen.size(); t++ ){
+            System.out.println(ingredientsChosen.get(t));
+        }
+
         // turn strings of chosen items into array of Ingredient objects
         int length = ingredientsChosen.size();
         for (int i = 0; i < length; i++){
             try {
-                ingredientList.add(ingredientDao.findByIngredientName(ingredientsChosen.get(i)));
+                ingredientList.add(ingredientDao.findByName(ingredientsChosen.get(i)));
+                System.out.println("8" + ingredientList.get(i).getName());
             } catch (NullPointerException e) {
                 e.printStackTrace();
                 return displayError("You have not chosen any Pantry items yet!", model);
@@ -75,7 +79,7 @@ public class PantryController extends AbstractController {
     public String displayPantry(HttpServletRequest request, Model model) {
 
         User user = getUserFromSession(request);
-        ArrayList<Ingredient> items;
+        List<Ingredient> items;
 
         try {
             items = user.getPantryList();
@@ -101,13 +105,24 @@ public class PantryController extends AbstractController {
     public String buildPantry(HttpServletRequest request, Model model) {
 
         // get all ingredients from table
-        ArrayList<Ingredient> allIngredients = ingredientDao.findAll();
+        ArrayList<Ingredient> allItems = ingredientDao.findAll();
+        ArrayList<String> pantryItems = new ArrayList<String>();
+        int length = allItems.size();
+        for (int i = 0; i < length; i++){
+            pantryItems.add(allItems.get(i).getName());
+
+        }
+
+        // testing loop
+        /* for (int k = 0; k < length; k++) {
+            System.out.println(pantryItems.get(k));
+        } */
 
 
         // pass data to template
         model.addAttribute("title", "Pantry Items");
         model.addAttribute("recipeNavClass", "active");
-        model.addAttribute("pantryItems", allIngredients);
+        model.addAttribute("pantryItems", pantryItems);
 
         return "buildPantry";
     }

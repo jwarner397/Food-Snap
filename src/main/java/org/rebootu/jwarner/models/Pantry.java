@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by Joseph on 6/16/2015.
  */
-@Entity
+/* @Entity
 @Table(name = "pantrys")
 public class Pantry extends AbstractEntity {
     private int ownerID;
@@ -43,4 +43,4 @@ public class Pantry extends AbstractEntity {
     }*/
 
 
-}
+// }

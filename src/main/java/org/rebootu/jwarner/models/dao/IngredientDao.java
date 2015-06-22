@@ -1,7 +1,7 @@
 package org.rebootu.jwarner.models.dao;
 
 import org.rebootu.jwarner.models.Ingredient;
-import org.rebootu.jwarner.models.Pantry;
+
 import org.rebootu.jwarner.models.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 public interface IngredientDao extends CrudRepository<Ingredient, Integer> {
 
-    Ingredient findByIngredientName(String ingredientName);
+    Ingredient findByName(String ingredientName);
 
     ArrayList<Ingredient> findAll();
 }
