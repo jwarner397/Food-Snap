@@ -2,7 +2,7 @@
  * styles.css
  *
  * Computer Science 50
- * Problem Set 7
+ * FoodSnap Project
  *
  * Global CSS.
  */
@@ -13,6 +13,8 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    background-color:rgba(245, 222, 179, .3);
+    max-width: 450px;
 }
 
 #middle .form-control
@@ -48,3 +50,36 @@ li{
     text-align: center;
 }
 
+body {
+    background-image: url("../image/414844.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    /*background-repeat: no-repeat;
+    background-origin: content-box;*/
+}
+
+h1{
+    font-family: BrushScript MT,cursive;
+    font-weight: 100;
+}
+
+.nav {
+    font-family: BrushScript MT, cursive;
+}
+
+h2 {
+    font-family: "BrushScript MT";
+    font-size: x-large;
+}
+
+#welcome {
+    color: midnightblue;
+    font-family: BrushScript MT, cursive;
+    font-size: 50px;
+}
+
+#listHeader {
+    color: midnightblue;
+    font-family: BrushScript MT, cursive;
+    font-size: 25px;
+}

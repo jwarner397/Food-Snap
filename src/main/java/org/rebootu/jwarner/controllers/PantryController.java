@@ -35,7 +35,7 @@ public class PantryController extends AbstractController {
     @RequestMapping(value = "/displayPantry", method = RequestMethod.POST)
     public String displayPantry(String pantryItems, HttpServletRequest request, Model model) {
 
-        System.out.println(pantryItems);
+        // System.out.println(pantryItems);
         ArrayList<String> ingredientsChosen;
         ArrayList<Ingredient> ingredientList = new ArrayList<>();
 
@@ -47,16 +47,16 @@ public class PantryController extends AbstractController {
         }
 
         // test loop
-        for (int t = 0; t < ingredientsChosen.size(); t++ ){
+        /*for (int t = 0; t < ingredientsChosen.size(); t++ ){
             System.out.println(ingredientsChosen.get(t));
-        }
+        }*/
 
         // turn strings of chosen items into array of Ingredient objects
         int length = ingredientsChosen.size();
         for (int i = 0; i < length; i++){
             try {
                 ingredientList.add(ingredientDao.findByName(ingredientsChosen.get(i)));
-                System.out.println("8" + ingredientList.get(i).getName());
+                // System.out.println("8" + ingredientList.get(i).getName());
             } catch (NullPointerException e) {
                 e.printStackTrace();
                 return displayError("You have not chosen any Pantry items yet!", model);
@@ -71,7 +71,7 @@ public class PantryController extends AbstractController {
             // pass data to template
         model.addAttribute("title", "My Pantry");
         model.addAttribute("recipeNavClass", "active");
-        model.addAttribute("pantryList", ingredientList);
+        model.addAttribute("ingredientList", ingredientList);
         return "pantry";
     }
 
@@ -88,16 +88,16 @@ public class PantryController extends AbstractController {
             return displayError("You have not chosen any Pantry items yet!", model);
         }
 
-        /* // for testing purposes, take out in final
+        // for testing purposes, take out in final
         int length = items.size();
         for (int i = 0; i < length; i++){
-            System.out.println(items.get(i));
-        }*/
+            System.out.println(items.get(i).getName());
+        }
 
         // pass data to template
         model.addAttribute("title", "My Pantry");
         model.addAttribute("recipeNavClass", "active");
-        model.addAttribute("pantryList", items);
+        model.addAttribute("ingredientList", items);
         return "pantry";
     }
 
