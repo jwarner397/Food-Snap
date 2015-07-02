@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by Joseph on 6/19/2015.
@@ -20,25 +22,30 @@ public class RecipeController extends AbstractController {
     public String getRecipes(HttpServletRequest request, Model model){
         // bring user into scope
         User user = getUserFromSession(request);
-        List<Ingredient> ingredients;
+        List<Ingredient> userIngredients;
+
 
         // get user's ingredient list
         try{
-            ingredients = user.getPantryList();
+            userIngredients = user.getPantryList();
         } catch (NullPointerException e) {
             e.printStackTrace();
             return displayError("You have not chosen any Pantry items yet!", model);
         }
 
-        String csvList = null;
+        String csvList = "";
+        ListIterator<Ingredient> li = userIngredients.listIterator();
+        while (li.hasNext()){
 
-        for(int i = 0; i < ingredients.size(); i++) {
-            csvList = csvList + ingredients.get(i).getName() + ", ";
+            // cast ingredient array to string for API call
+            csvList = csvList + li.next().getName() + ", " ;
+
+            // for testing only, take out at finish
+            System.out.println(csvList);
 
         }
 
-        // cast ingredient array to string for API call
-
+        // hit recipe API with csvList
 
 
         return null;
