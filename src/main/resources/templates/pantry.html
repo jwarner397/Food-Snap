@@ -11,10 +11,9 @@
     <div id="middle">
         <ul>
             <li id="listHeader">Here is Your Pantry List</li>
-            <!-- <span th:text="${pantryList}"></span> -->
             <li th:each="ingredient : ${ingredientList}">
 
-                <span th:text="${ingredient.getName()}"></span>
+                <span th:text="${ingredient.name}"></span>
             </li>
         </ul>
 

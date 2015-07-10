@@ -12,13 +12,10 @@
 
         <form method="post" action="/displayPantry">
             <ul>
-                <li>What's in Your Pantry?</li>
-                <li th:each="pantryItem : ${pantryItems}">
-                    <input type="checkbox" name="pantryItems" th:value="${pantryItem}"  />
-                    <label th:for="${pantryItem}"
-                           th:text="${pantryItem}"></label>
-
-                </li>
+                <li id="listHeader">What's in Your Pantry?</li>
+                <li th:each="pantryItem : ${pantryItems}"><input type="checkbox" name="pantryItems"
+                         th:value="${pantryItem.name}" th:checked="${#lists.contains(userItems, pantryItem)}" />
+                        <label th:text="${pantryItem.name}"></label></li>
                 <li> <input type="submit" class="btn btn-default" value="Submit" /> </li>
             </ul>
         </form>

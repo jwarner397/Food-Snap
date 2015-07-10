@@ -21,7 +21,7 @@ public class PantryController extends AbstractController {
     @Autowired
     public IngredientDao ingredientDao;
 
-    @RequestMapping(value = "/pantry")
+    /*@RequestMapping(value = "/pantry")
     public String pantry(HttpServletRequest request, Model model){
 
 
@@ -29,16 +29,18 @@ public class PantryController extends AbstractController {
         model.addAttribute("pantryNavClass", "active");
 
         return "pantry";
-    }
+    } */
 
 
     @RequestMapping(value = "/displayPantry", method = RequestMethod.POST)
     public String displayPantry(String pantryItems, HttpServletRequest request, Model model) {
 
         // System.out.println(pantryItems);
+
         ArrayList<String> ingredientsChosen;
         ArrayList<Ingredient> ingredientList = new ArrayList<>();
 
+        // parse string of ingredient names received from ingredients chosen vis checkboxes
         try {
             ingredientsChosen = new ArrayList<String>(Arrays.asList(pantryItems.split("\\s*,\\s*")));
         } catch(NullPointerException e) {
@@ -46,17 +48,11 @@ public class PantryController extends AbstractController {
             return displayError("You have not chosen any Pantry items yet!", model);
         }
 
-        // test loop
-        /*for (int t = 0; t < ingredientsChosen.size(); t++ ){
-            System.out.println(ingredientsChosen.get(t));
-        }*/
-
         // turn strings of chosen items into array of Ingredient objects
         int length = ingredientsChosen.size();
         for (int i = 0; i < length; i++){
             try {
                 ingredientList.add(ingredientDao.findByName(ingredientsChosen.get(i)));
-                // System.out.println("8" + ingredientList.get(i).getName());
             } catch (NullPointerException e) {
                 e.printStackTrace();
                 return displayError("You have not chosen any Pantry items yet!", model);
@@ -81,17 +77,12 @@ public class PantryController extends AbstractController {
         User user = getUserFromSession(request);
         List<Ingredient> items;
 
+        // get existing ingredient list for user
         try {
             items = user.getPantryList();
         } catch (NullPointerException e) {
             e.printStackTrace();
             return displayError("You have not chosen any Pantry items yet!", model);
-        }
-
-        // for testing purposes, take out in final
-        int length = items.size();
-        for (int i = 0; i < length; i++){
-            System.out.println(items.get(i).getName());
         }
 
         // pass data to template
@@ -104,25 +95,32 @@ public class PantryController extends AbstractController {
     @RequestMapping(value = "/buildPantry", method = RequestMethod.GET)
     public String buildPantry(HttpServletRequest request, Model model) {
 
+        // get user from request
+        // get user's current ingredient list
+        User user = getUserFromSession(request);
+        List<Ingredient> userItems;
+
+        // get existing ingredient list for user
+        try {
+            userItems = user.getPantryList();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return displayError("You have not chosen any Pantry items yet!", model);
+        }
+
         // get all ingredients from table
         ArrayList<Ingredient> allItems = ingredientDao.findAll();
         ArrayList<String> pantryItems = new ArrayList<String>();
         int length = allItems.size();
         for (int i = 0; i < length; i++){
             pantryItems.add(allItems.get(i).getName());
-
         }
-
-        // testing loop
-        /* for (int k = 0; k < length; k++) {
-            System.out.println(pantryItems.get(k));
-        } */
-
 
         // pass data to template
         model.addAttribute("title", "Pantry Items");
         model.addAttribute("recipeNavClass", "active");
-        model.addAttribute("pantryItems", pantryItems);
+        model.addAttribute("pantryItems", allItems);
+        model.addAttribute("userItems", userItems);
 
         return "buildPantry";
     }
